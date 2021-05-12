@@ -18,6 +18,7 @@ class KfzDbController extends Controller
         }
         return response()->json($kfzDb, 200);
     }
+    
 
     public function store(Request $request){
         $input = request()->get('input');

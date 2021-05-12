@@ -10,4 +10,5 @@ class KfzDb extends Model
     use HasFactory;
     public $timestamps = false;
     protected $table = "kfz_db";
+    
 }
