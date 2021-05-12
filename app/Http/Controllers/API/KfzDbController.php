@@ -18,17 +18,17 @@ class KfzDbController extends Controller
         }
         return response()->json($kfzDb, 200);
     }
-    
+
 
     public function store(Request $request){
         $input = request()->get('input');
         $kfzArray = explode(PHP_EOL, $input);
         foreach($kfzArray as $kfzPair){
-            $kfzPairArray = preg_split('/\s+/', $input);
-            $kfzDbEntry = new KfzDb();
-            $kfzDbEntry->kfz_key = $kfzPairArray[0];
-            $kfzDbEntry->kfz_kreis = $kfzPairArray[1];
-            $kfzDbEntry->save();
+            $kfzPairArray = preg_split('/\s+/', $kfzPair);
+            $kfzDbEntry = KfzDb::create([
+                'kfz_key' => $kfzPairArray[0],
+                'kfz_kreis' => $kfzPairArray[1],
+            ]);
         }
         return response()->json(null, 200);
     }
