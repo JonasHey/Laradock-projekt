@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\KfzDbController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('app');
-});
 
+Route::get('/', [KfzDbController::class, 'index'])->name('web.kfzDb.index');
+Route::post('/search', [KfzDbController::class, 'search'])->name('web.kzfDb.search');
+Route::get('/show/{id}', [KfzDbController::class, 'show'])->name('web.kzfDb.show');

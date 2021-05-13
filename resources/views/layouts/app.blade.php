@@ -12,6 +12,8 @@
         <link rel="stylesheet" href="./css/main.css">
         <link rel="stylesheet" href="./css/bootstrap.min.css">
 
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap.min.css') }}">
+
         <script src="./js/bootstrap.bundle.min.js"></script>
 
         <!-- Styles -->
@@ -20,8 +22,10 @@
         </style>
     </head>
     <body class="antialiased">
-        <main class="py-4">
-            @yield('content')
+        <main>
+            <div class="container">
+                @yield('content')
+            </div>
         </main>
     </body>
 </html>
