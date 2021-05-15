@@ -20,7 +20,11 @@ class ExportController extends Controller
                 $fileName = $csvHelper->getFileName();
                 break;
             case 'xml':
-                # code...
+                $xmlHelper = new ExportXml($kfzDb);
+                $xmlHelper->startExport();
+                sleep(500);
+                $filePath = $xmlHelper->getFilePath();
+                $fileName = $xmlHelper->getFileName();
                 break;
             
             default:
