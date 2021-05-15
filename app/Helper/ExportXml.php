@@ -10,13 +10,13 @@ use XML;
 
 class ExportXml implements Export
 {
-    protected string $filePath;
+    protected $filePath;
 
-    protected string $fileName;
+    protected $fileName;
 
-    protected KfzDb $data;
+    protected $data;
 
-    public function ExportXml(KfzDb $data){
+    function __construct($data){
         $this->data = $data;
         $xmlExportFolderPath = storage_path('app/xml');
         if(!File::exists($xmlExportFolderPath)) {
@@ -26,22 +26,20 @@ class ExportXml implements Export
     }
 
     public function startExport(): void {
-        $columns = array('Unterscheidungszeichen', 'Kreis', 'Kreistadt', 'Bundesland');
-        $this->fileName = "xml_export_".$this->data->key.time().".xml";
-        $data = [
-            'kennzeichenInformation' => [
-                'kennzeichen' => $this->data->key,
-                'kreis' => $this->data->kreis,
-                'kreisstadt' => $this->data->city,
-                'bundesland' => $this->data->state,
-            ]
-        ]
-
-        XML::export($data)
-            ->usePrettyOutput()
-            ->toFile($fileName);
-
+        $this->fileName = "xml_export_".$this->data->kfz_key.time().".xml";
         $this->filePath = storage_path('app/xml/'.$this->fileName);
+        $data = [
+            'kennzeichen' => $this->data->kfz_key,
+            'kreis' => $this->data->kfz_kreis,
+            'kreisstadt' => $this->data->kfz_city,
+            'bundesland' => preg_replace('/(\v|\s)+/', '', $this->data->kfz_state),
+        ];
+        $xml = XML::export($data)
+            ->usePrettyOutput()
+            ->rootTag('KennzeichenInformationen')
+            ->toString();
+
+        file_put_contents($this->filePath, $xml);
     }
 
     public function getFilePath(): string {

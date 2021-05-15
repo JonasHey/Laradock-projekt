@@ -9,13 +9,13 @@ use File;
 
 class ExportJson implements Export
 {
-    protected string $filePath;
+    protected $filePath;
 
-    protected string $fileName;
+    protected $fileName;
 
-    protected KfzDb $data;
+    protected $data;
 
-    public function ExportCsv(KfzDb $data){
+    function __construct($data){
         $this->data = $data;
         $jsonExportFolderPath = storage_path('app/json');
         if(!File::exists($jsonExportFolderPath)) {
@@ -23,16 +23,16 @@ class ExportJson implements Export
             File::makeDirectory($jsonExportFolderPath, 0777, true, true);
         }
     }
-
+    
     public function startExport(): void {
         $json = [
-            "Kennzeichen" => $this->data->key, 
-            "Kreis" => $this->data->kreis, 
-            "Kreisstadt" => $this->data->city, 
-            "Bundesland" => $this->data->state
+            "Kennzeichen" => $this->data->kfz_key, 
+            "Kreis" => $this->data->kfz_kreis, 
+            "Kreisstadt" => $this->data->kfz_city, 
+            "Bundesland" => preg_replace('/(\v|\s)+/', '', $this->data->kfz_state)
         ];
-        $this->fileName = "json_export_".$this->data->key.time().".json";
-        $this->filePath = storage_path('app/json/'.$this->filename);
+        $this->fileName = "json_export_".$this->data->kfz_key.time().".json";
+        $this->filePath = storage_path('app/json/'.$this->fileName);
         $prettyJson = json_encode($json, JSON_PRETTY_PRINT);
         file_put_contents(storage_path('app/json/'.$this->fileName), stripslashes($prettyJson));
     }

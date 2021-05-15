@@ -9,13 +9,13 @@ use File;
 
 class ExportCsv implements Export
 {
-    protected string $filePath;
+    protected $filePath;
 
-    protected string $fileName;
+    protected $fileName;
 
-    protected KfzDb $data;
+    protected $data;
 
-    public function ExportCsv(KfzDb $data){
+    function __construct($data){
         $this->data = $data;
         $csvExportFolderPath = storage_path('app/csv');
         if(!File::exists($csvExportFolderPath)) {
@@ -25,13 +25,13 @@ class ExportCsv implements Export
     }
 
     public function startExport(): void {
-        $columns = array('Unterscheidungszeichen', 'Kreis', 'Kreistadt', 'Bundesland');
-        $this->fileName = "csv_export_".$this->data->key.time().".csv";
-        $file = fopen(storage_path('app/csv/'.$this->filename), 'w');
+        $columns = array('Kennzeichen', 'Kreis', 'Kreistadt', 'Bundesland');
+        $this->fileName = "csv_export_".$this->data->kfz_key.time().".csv";
+        $file = fopen(storage_path('app/csv/'.$this->fileName), 'w');
         fputcsv($file, $columns);
-        fputcsv($file, array($this->data->key, $this->data->kreis, $this->data->city, $this->data->state));
+        fputcsv($file, array($this->data->kfz_key, $this->data->kfz_kreis, $this->data->kfz_city, preg_replace('/(\v|\s)+/', '', $this->data->kfz_state)));
         fclose($file);
-        $this->filePath = storage_path('app/csv/'.$this->filename);
+        $this->filePath = storage_path('app/csv/'.$this->fileName);
     }
 
     public function getFilePath(): string {
