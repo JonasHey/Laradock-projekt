@@ -46,7 +46,7 @@
         </div>
         <div class="card-body">
             <div class="list-group custom-favorite-list">
-                @if ($favourites->isEmpty())
+                @if ($favorites->isEmpty())
                     <h4>Noch keine Favoriten vorhanden</h4>
                 @else
                     @foreach ($favorites as $favorite)
