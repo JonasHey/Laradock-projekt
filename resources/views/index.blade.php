@@ -46,11 +46,15 @@
         </div>
         <div class="card-body">
             <div class="list-group custom-favorite-list">
-                @foreach ($favorites as $favorite)
-                <a href="/show/{{$favorite->kfzDb->id}}" class="list-group-item list-group-item-action" aria-current="true">
-                    {{$loop->index +1}}. Kennzeichenfavorit: {{$favorite->kfzDb->kfz_key}}
-                </a>
-                @endforeach
+                @if ($favourites->isEmpty())
+                    <h4>Noch keine Favoriten vorhanden</h4>
+                @else
+                    @foreach ($favorites as $favorite)
+                        <a href="/show/{{$favorite->kfzDb->id}}" class="list-group-item list-group-item-action" aria-current="true">
+                            {{$loop->index +1}}. Kennzeichenfavorit: {{$favorite->kfzDb->kfz_key}}
+                        </a>
+                    @endforeach
+                @endif
             </div>
         </div>
     </div>
