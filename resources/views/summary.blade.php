@@ -1,8 +1,20 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container-fluid mt-5">
-    <div class="card">
+    <div class="navigation-header d-flex flex-column align-items-center">
+        <button onclick="window.history.back()" class="back-arrow-icon d-flex flex-column align-items-center">
+            <img class="back-arrow" src="{{ URL::to('/') }}/images/arrow_circle_back.svg" alt="">
+            <span class="back-arrow-text">Zurück</span>
+        </button>
+        <a href="/" class="home-icon d-flex flex-column align-items-center mt-5">
+            <img class="home-icon-svg" src="{{ URL::to('/') }}/images/home.svg" alt="">
+            <span class="home-icon-text">Startseite</span>
+        </a>
+    </div>
+    <script>
+
+    </script>
+    <div class="card mt-5">
         <div class="card-header">
             <h1>Nähere Informationen zu dem Kennzeichen: {{$kfz->kfz_key ?? 'Kein Datensatz vorhanden'}}</h1>
         </div>
@@ -34,5 +46,4 @@
             </form>
         </div>
     </div>
-</div>
 @endsection

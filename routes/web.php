@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\KfzDbController;
 use App\Http\Controllers\ExportController;
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,3 +22,7 @@ Route::post('/search', [KfzDbController::class, 'search'])->name('web.kzfDb.sear
 Route::get('/show/{id}', [KfzDbController::class, 'show'])->name('web.kzfDb.show');
 
 Route::post('/export/{id}', [ExportController::class, 'getExport'])->name('export');
+
+Route::get('/back', function(Request $request) {
+    Redirect::back();
+});
