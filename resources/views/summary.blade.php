@@ -10,6 +10,10 @@
             <img class="home-icon-svg" src="{{ URL::to('/') }}/images/home.svg" alt="">
             <span class="home-icon-text">Startseite</span>
         </a>
+        <a href="#notes" class="note-icon d-flex flex-column align-items-center mt-5">
+            <img class="note-icon-svg" src="{{ URL::to('/') }}/images/note.svg" alt="">
+            <span class="note-icon-text">Notizen</span>
+        </a>
     </div>
     <div class="card mt-5">
         <div class="card-header d-flex justify-content-between">
@@ -96,6 +100,42 @@
                     </li>
                 </ul>
             </div>
+        </div>
+    </div>
+    <div class="card mt-5 mb-5" id="notes">
+        <div class="card-header d-flex justify-content-between">
+            <h1>Notizen zu dem Kennzeichen: {{$kfz->kfz_key ?? 'Kein Datensatz vorhanden'}}</h1>
+        </div>
+        <div class="card-body">
+            @if ($notes == "empty")
+                <h5>Keine Notizen Vorhanden!</h5>
+            @else
+                @foreach ($notes as $note)
+                    <h5>Notiz {{$loop->index +1}}:</h5>
+                    <ul>
+                        <li>
+                            <p>
+                                {{$note->note}}
+                                <br>
+                                <a href="/notes/{{$kfz->id}}/delete/{{$note->id}}" class="delete-note-link">(notiz löschen)</a>
+                            </p>
+                        </li>
+                    </ul>
+                @endforeach
+            @endif
+        </div>
+        <div class="card-footer">
+            <h5>Notiz Hinzufügen:</h5>
+            <form id="note_form" action="/notes/{{$kfz->id}}" method="POST">
+                @csrf
+                <div class="form-floating">
+                    <textarea class="form-control" form="note_form" placeholder="Hier können Sie eine Notiz schreiben" id="note_textarea" name="note_textarea"></textarea>
+                    <label for="note_textarea">Hier können Sie eine Notiz schreiben</label>
+                </div>
+                <div class="d-grid gap-2 mt-1">
+                    <button class="btn btn-sm btn-success" type="submit">Notiz speichern</button>
+                </div>
+            </form>
         </div>
     </div>
 @endsection

@@ -28,7 +28,5 @@ Route::post('/export/{id}', [ExportController::class, 'getExport'])->name('expor
 Route::get('/favorites', [FavoriteController::class, 'index'])->name('favorite.index');
 Route::post('/favorite/{id}', [FavoriteController::class, 'store'])->name('favorite.store');
 
-Route::get('/notes/{kfzDbId}', [NoteController::class, 'index'])->name('notes.index');
 Route::post('/notes/{kfzDbId}', [NoteController::class, 'store'])->name('notes.store');
-Route::post('/notes/{kfzDbId}/edit/{noteId}', [NoteController::class, 'update'])->name('notes.post');
-Route::delete('/notes/{kfzDbId}/delete/{noteId}', [NoteController::class, 'destroy'])->name('notes.destroy');
+Route::get('/notes/{kfzDbId}/delete/{id}', [NoteController::class, 'destroy'])->name('notes.destroy');

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\KfzDb;
 use App\Models\Favorites;
+use App\Models\Notes;
 
 class KfzDbController extends Controller
 {
@@ -42,7 +43,10 @@ class KfzDbController extends Controller
         $kfz = KfzDb::find($id);
         $favorite = Favorites::where('kfz_db_id', $id)->get();
         $isFavorite = !$favorite->isEmpty();
-
-        return response()->view('summary', ['kfz' => $kfz, 'path' => request()->path(), 'isFavorite' => $isFavorite]);
+        $notes = Notes::where('kfz_db_id', $id)->get();
+        if($notes->isEmpty()){
+            $notes  = "empty";
+        }
+        return response()->view('summary', ['kfz' => $kfz, 'path' => request()->path(), 'isFavorite' => $isFavorite, 'notes' => $notes]);
     }
 }
