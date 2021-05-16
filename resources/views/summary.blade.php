@@ -12,8 +12,21 @@
         </a>
     </div>
     <div class="card mt-5">
-        <div class="card-header">
+        <div class="card-header d-flex justify-content-between">
             <h1>Nähere Informationen zu dem Kennzeichen: {{$kfz->kfz_key ?? 'Kein Datensatz vorhanden'}}</h1>
+            @if (!$isFavorite)
+                <form action="/favorite/{{$kfz->id}}" method="POST">
+                    @csrf
+                    <input type="hidden" name="favorite_type" value="add">
+                    <button class="btn btn-success">Zu Favoriten hinzufügen</button>
+                </form>
+            @else
+                <form action="/favorite/{{$kfz->id}}" method="POST">
+                    @csrf
+                    <input type="hidden" name="favorite_type" value="delete">
+                    <button class="btn btn-danger">Favorit entfernen</button>
+                </form>
+            @endif
         </div>
         <div class="card-body">
             <h3>Kreis:</h3>

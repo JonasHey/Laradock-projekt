@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\KfzDb;
+use App\Models\Favorites;
 
 class KfzDbController extends Controller
 {
     public function index(){
-        return response()->view('index');
+        $favorites = Favorites::all();
+        return response()->view('index', ['favorites' => $favorites]);
     }
 
     public function search(Request $request){
@@ -24,7 +26,7 @@ class KfzDbController extends Controller
             case 'kreisstadt':
                 $data = KfzDb::where('kfz_city', 'like', '%'.request()->get('kreisstadt_input').'%')->get();
                 break;
-                                    
+
             default:
                 $data = KfzDb::where('kfz_key', request()->get('kennzeichen_input'))
                     ->orWhere('kfz_kreis', request()->get('kennzeichen_input'))
@@ -38,6 +40,9 @@ class KfzDbController extends Controller
 
     public function show(Request $request, $id){
         $kfz = KfzDb::find($id);
-        return response()->view('summary', ['kfz' => $kfz, 'path' => request()->path()]);
+        $favorite = Favorites::where('kfz_db_id', $id)->get();
+        $isFavorite = !$favorite->isEmpty();
+
+        return response()->view('summary', ['kfz' => $kfz, 'path' => request()->path(), 'isFavorite' => $isFavorite]);
     }
 }

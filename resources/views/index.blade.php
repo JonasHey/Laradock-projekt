@@ -40,5 +40,18 @@
                 </div>
             </form>
         </div>
+    </div><div class="card mt-5">
+        <div class="card-header">
+            <h1>Kennzeichen – Favoriten</h1>
+        </div>
+        <div class="card-body">
+            <div class="list-group custom-favorite-list">
+                @foreach ($favorites as $favorite)
+                <a href="/show/{{$favorite->kfzDb->id}}" class="list-group-item list-group-item-action" aria-current="true">
+                    {{$loop->index +1}}. Kennzeichenfavorit: {{$favorite->kfzDb->kfz_key}}
+                </a>
+                @endforeach
+            </div>
+        </div>
     </div>
 @endsection

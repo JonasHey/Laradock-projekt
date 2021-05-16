@@ -3,20 +3,25 @@
     overflow: auto;
 }
 
+.custom-favorite-list{
+    max-height: 31vh !important;
+    overflow: auto;
+}
+
 .navigation-header{
     position: absolute;
     top: 3rem;
     left: 3rem;
 }
 
-.navigation-header>.back-arrow-icon{ 
+.navigation-header>.back-arrow-icon{
     top: 3rem;
     left: 3rem;
     border: none !important;
     background-color: transparent !important;
 }
 
-.navigation-header>.home-icon{ 
+.navigation-header>.home-icon{
     top: 6rem;
     left: 6rem;
 }
