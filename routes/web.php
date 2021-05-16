@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\KfzDbController;
 use App\Http\Controllers\ExportController;
 use App\Http\Controllers\FavoriteController;
+use App\Http\Controllers\NoteController;
 use Illuminate\Http\Request;
 
 /*
@@ -27,6 +28,7 @@ Route::post('/export/{id}', [ExportController::class, 'getExport'])->name('expor
 Route::get('/favorites', [FavoriteController::class, 'index'])->name('favorite.index');
 Route::post('/favorite/{id}', [FavoriteController::class, 'store'])->name('favorite.store');
 
-Route::get('/back', function(Request $request) {
-    Redirect::back();
-});
+Route::get('/notes/{kfzDbId}', [NoteController::class, 'index'])->name('notes.index');
+Route::post('/notes/{kfzDbId}', [NoteController::class, 'store'])->name('notes.store');
+Route::post('/notes/{kfzDbId}/edit/{noteId}', [NoteController::class, 'update'])->name('notes.post');
+Route::delete('/notes/{kfzDbId}/delete/{noteId}', [NoteController::class, 'destroy'])->name('notes.destroy');

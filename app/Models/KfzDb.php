@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Notes;
 
 
 class KfzDb extends Model
@@ -16,5 +17,8 @@ class KfzDb extends Model
 
     public function favorites(){
         return $this->hasOne("App\Models\Favorites", 'kfz_db_id', 'id');
+    
+    public function notes(){
+        return $this->hasMany(Notes::class);
     }
 }
