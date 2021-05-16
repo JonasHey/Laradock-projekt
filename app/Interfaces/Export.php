@@ -9,4 +9,6 @@ interface Export
     public function startExport(): void;
 
     public function getFilePath(): string;
+
+    public function getFileName(): string;
 }
